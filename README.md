@@ -14,7 +14,7 @@ gemini extensions install https://github.com/kenryu42/gemini-safety-net
 ```
 
 > [!IMPORTANT]
-> You need to set the follwowing settings in `.gemini/settings.json` to enable hooks:
+> You need to set the following settings in `.gemini/settings.json` to enable hooks:
 > ```json
 > {
 >   "tools": {
