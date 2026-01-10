@@ -14,7 +14,7 @@ gemini extensions install https://github.com/kenryu42/gemini-safety-net
 ```
 
 > [!IMPORTANT]
-> After installing the plugin, you need to restart your Gemini CLI for it to take effect.
+> You need to set the follwowing settings in `.gemini/settings.json` to enable hooks:
 > ```json
 > {
 >   "tools": {
