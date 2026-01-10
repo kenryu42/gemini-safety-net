@@ -1,0 +1,28 @@
+{
+  "name": "gemini-safety-net",
+  "displayName": "Gemini Safety Net - Blocks destructive git and filesystem commands",
+  "version": "1.0.0",
+  "hooks": "./hooks/hooks.json",
+  "author": "J Liew",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kenryu42/gemini-safety-net.git"
+  },
+  "homepage": "https://github.com/kenryu42/gemini-safety-net",
+  "keywords": [
+		"gemini",
+		"rm -rf",
+		"git",
+		"safety net",
+		"destructive",
+		"command",
+		"guard",
+		"hook",
+		"plugin",
+    "extension"
+	],
+  "dependencies": {
+    "node": ">=18.0.0"
+  }
+}

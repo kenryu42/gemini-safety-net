@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "disabled": [],
+    "BeforeTool": [
+      {
+        "matcher": "run_shell_command",
+        "hooks": [
+          {
+            "command": "npx -y cc-safety-net --gemini-cli",
+            "type": "command"
+          }
+        ]
+      }
+    ]
+  }
+}
