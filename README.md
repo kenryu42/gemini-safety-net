@@ -3,10 +3,11 @@
 [![CI](https://github.com/kenryu42/claude-code-safety-net/actions/workflows/ci.yml/badge.svg)](https://github.com/kenryu42/claude-code-safety-net/actions/workflows/ci.yml)
 [![codecov](https://codecov.io/github/kenryu42/claude-code-safety-net/branch/main/graph/badge.svg?token=C9QTION6ZF)](https://codecov.io/github/kenryu42/claude-code-safety-net)
 [![Version](https://img.shields.io/github/v/tag/kenryu42/gemini-safety-net?label=version&color=blue)](https://github.com/kenryu42/gemini-safety-net)
-[![Claude Code](https://img.shields.io/badge/Claude%20Code-Plugin-orange)](https://github.com/kenryu42/claude-code-safety-net)
-[![OpenCode](https://img.shields.io/badge/OpenCode-Plugin-black)](https://github.com/kenryu42/claude-code-safety-net)
-[![Gemini CLI](https://img.shields.io/badge/Gemini-CLI-lightblue)](https://github.com/kenryu42/gemini-safety-net)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Claude Code](https://img.shields.io/badge/Claude%20Code-D27656)](#claude-code-installation)
+[![OpenCode](https://img.shields.io/badge/OpenCode-black)](#opencode-installation)
+[![Gemini CLI](https://img.shields.io/badge/Gemini%20CLI-678AE3)](#gemini-cli-installation)
+[![Copilot CLI](https://img.shields.io/badge/Copilot%20CLI-4EA5C9)](#github-copilot-cli-installation)
+[![License: MIT](https://img.shields.io/badge/License-MIT-red.svg)](https://opensource.org/licenses/MIT)
 
 <div align="center">
 
@@ -23,6 +24,7 @@ A Gemini extension that acts as a safety net, catching destructive git and files
   - [Gemini CLI Installation](#gemini-cli-installation)
   - [Claude Code Installation](#claude-code-installation)
   - [OpenCode Installation](#opencode-installation)
+  - [Copilot CLI Installation](#github-copilot-cli-installation)
 - [Commands Blocked](#commands-blocked)
 - [Commands Allowed](#commands-allowed)
 - [What Happens When Blocked](#what-happens-when-blocked)
@@ -55,16 +57,6 @@ A Gemini extension that acts as a safety net, catching destructive git and files
 gemini extensions install https://github.com/kenryu42/gemini-safety-net
 ```
 
-> [!IMPORTANT]
-> You need to set the following settings in `.gemini/settings.json` to enable hooks:
-> ```json
-> {
->   "tools": {
->     "enableHooks": true
->   }
-> }
-> ```
-
 ---
 
 ### Claude Code Installation
@@ -91,10 +83,6 @@ Paste this into any LLM agent (Claude Code, OpenCode, Cursor, etc.):
 
 ```
 Install the cc-safety-net plugin in `~/.config/opencode/opencode.json` (or `.jsonc`) according to the schema at: https://opencode.ai/config.json
-
-Then copy the following files to `~/.config/opencode/command/`:
-- https://raw.githubusercontent.com/kenryu42/claude-code-safety-net/main/.opencode/command/set-custom-rules.md
-- https://raw.githubusercontent.com/kenryu42/claude-code-safety-net/main/.opencode/command/verify-custom-rules.md
 ```
 
 **Option B: Manual setup**
@@ -108,6 +96,43 @@ Then copy the following files to `~/.config/opencode/command/`:
   ```
 
 2. **Copy the [commands](.opencode/command) to `~/.config/opencode/command/`**
+
+---
+
+### GitHub Copilot CLI Installation
+
+Safety Net supports GitHub Copilot CLI via its [hooks system](https://docs.github.com/en/copilot/concepts/agents/coding-agent/about-hooks).
+
+> [!NOTE]
+> Copilot CLI hooks must be installed at the **project level** (in each repository). User-level hooks (`~/.github/hooks/` or `~/.copilot/hooks/`) are not currently supported by Copilot CLI. See [copilot-cli#1067](https://github.com/github/copilot-cli/issues/1067) to track progress on user-level hook support.
+
+1. **Create the hooks directory** in your repository:
+
+   ```bash
+   mkdir -p .github/hooks
+   ```
+
+2. **Create `.github/hooks/safety-net.json`**:
+
+   ```json
+   {
+     "version": 1,
+     "hooks": {
+       "preToolUse": [
+         {
+           "type": "command",
+           "bash": "npx -y cc-safety-net --copilot-cli",
+           "cwd": ".",
+           "timeoutSec": 15
+         }
+       ]
+     }
+   }
+   ```
+
+3. **Restart Copilot CLI** — hooks are loaded at session start.
+
+The hook will intercept bash commands and block destructive operations before they execute.
 
 ---
 
