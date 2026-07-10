@@ -3,7 +3,6 @@
     "disabled": [],
     "BeforeTool": [
       {
-        "matcher": "run_shell_command",
         "hooks": [
           {
             "command": "npx -y cc-safety-net hook --gemini-cli",
